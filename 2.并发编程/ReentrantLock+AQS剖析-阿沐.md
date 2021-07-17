@@ -5,7 +5,7 @@
 ReentrantLock，重入锁，就是支持冲入的锁，支持一个线程对资源的重复加锁，该锁还支持公平和非公平的选择。
 
 ### 理解ReentrantLock
-- ReentrantLock不同于Synchronized的隐士重入，基于AQS实现，调用lock()获取锁，再次调用lock()不会被阻塞。   
+- ReentrantLock不同于Synchronized的隐式重入，基于AQS实现，调用lock()获取锁，再次调用lock()不会被阻塞。   
 - ReentrantLock提供了一个构造函数，控制锁是否是公平的。非公平锁效率更高，但非公平锁能减少“饥饿”的发生概率。
 ```
 //默认非公平锁
@@ -96,7 +96,7 @@ public void lock() {
             return false;
         }
 ```
-![](image/reentrantLock.png)  
+![](image/reentrantLock.png)
 > 某个线程获取锁失败的后续流程是什么呢？有以下两种可能：
 1. 将当前线程获锁结果设置为失败，获取锁流程结束。这种设计会极大降低系统的并发度，并不满足我们实际的需求。
 2. AQS框架的处理流程，存在某种排队等候机制，线程继续等待，仍然保留获取锁的可能，获取锁流程仍在继续。
